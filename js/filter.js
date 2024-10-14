@@ -2,22 +2,22 @@ const wishStoreGet = JSON.parse(localStorage.getItem("wishlist")) || [];
 const detailsDiv = document.getElementById("details-container");
 
 
-console.log("getting list",wishStoreGet)
+// console.log("getting list",wishStoreGet)
 document.addEventListener("DOMContentLoaded", function () {
     const wishDiv = document.getElementById("wish-container");
 
-    console.log("check wishlist", wishStoreGet);
+    // console.log("check wishlist", wishStoreGet);
 
     if (wishStoreGet.length === 0) {
         wishDiv.innerHTML = "<p>Your wishlist is empty.</p>";
     } else {
         wishStoreGet.forEach((book,index) => {
             const authorName = book.authors.length > 0 ? book.authors[0].name : "Unknown Author";
-            
+            // console.log("id to show",book.id)
             const res = 
                 `<div class="card">
 
-              <a href="../html/bookDetails.html" onclick="bookDetails()">
+              <a href="../html/bookDetails.html"  onclick="bookDetails(${book.id})">
                     <img class="card-img" src="${book.formats["image/jpeg"]}" alt="Book Image">
                     <p>${book.id}</p>
                     <p>${book.title}</p>
@@ -32,45 +32,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-function bookDetails() {
-    const params = new URLSearchParams(window.location.search);
-    const bookId = params.get("id");
+function bookDetails(id) {
+    const x =localStorage.setItem("selectedBookId", JSON.stringify(id));
+console.log("hello id new",x)
+    // const options = {
+    //     method: "GET",
+    //   };
+    // fetch(`https://gutendex.com/books/?ids=${id}`, options)
+    // .then((response) => {
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! Status: ${response.status}`);
+    //   }
+    //   return response.json();
+    // })
+    // .then((data) => {
 
-    if (bookId) {
-        const selectedBook = wishStoreGet.find((book) => book.id === bookId);
-
-        if (selectedBook) {
-            const authorName = selectedBook.authors.length > 0 ? selectedBook.authors[0].name : "Unknown Author";
-            const detailsHTML = `
-                <div class="card">
-                    <img class="card-img" src="${selectedBook.formats["image/jpeg"]}" alt="Book Image">
-                    <p>${selectedBook.id}</p>
-                    <p>${selectedBook.title}</p>
-                    <p class="author">Author: ${authorName}</p>
-                </div>
-            `;
-
-            detailsDiv.innerHTML = detailsHTML;
-        } else {
-            detailsDiv.innerHTML = "<p>Book not found.</p>";
-        }
-    } else {
-        detailsDiv.innerHTML = "<p>No book ID provided.</p>";
-    }
-    // const detailsDiv=document.getElementById('details-container')
-    // wishStoreGet.find((item) => item.id == id){
-
-    //     const data = 
-    //     `<div class="card">
+    //     console.log("hello single book",data)
+    // //   dataStore = data?.results;
+      
+    // //   displayBooks(dataStore); 
+    // })
+    // .catch((error) => console.error("Fetch error:", error));
     
-    //               <a href="../html/bookDetails.html" onclick="bookDetails(${book})">
-    //                     <img class="card-img" src="${book.formats["image/jpeg"]}" alt="Book Image">
-    //                     <p>${book.id}</p>
-    //                     <p>${book.title}</p>
-    //                     <p class="author">Author: ${authorName}</p>
-    //               </a>
-    //                 </div>`
-                    
-    // }
-    // detailsDiv.innerHTML(data)
+   
 }
