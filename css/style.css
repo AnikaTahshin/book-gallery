@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set a background image for the body */
+
+/* NAVBAR CSS STARS */
+
+.topnav {
+    overflow: hidden;
+    background-color: #e9e9e9;
+  }
+  
+  .topnav a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .topnav a.active {
+    background-color: #2196F3;
+    color: white;
+  }
+  
+  .topnav .search-container {
+    float: right;
+  }
+  
+  .topnav input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+  }
+  
+  .topnav .search-container button {
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .topnav .search-container button:hover {
+    background: #ccc;
+  }
+  
+
+/* NAVBAR CSS ENDS */
+
+
+/* Main container styling */
+.app-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background for readability */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+/* CARD DIV STARTS */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* max-width: 300px; */
+    /* margin: auto; */
+    text-align: center;
+    padding: 25px;
+    height:100%;
+    width: 100%;
+    /* font-family: arial; */
+  }
+  
+  .card-img{
+    max-width: 300px;
+  }
+  .price {
+    color: grey;
+    font-size: 22px;
+  }
+  
+ .app-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr
+    /* justify-content: center;
+    align-items: center;
+    flex-direction: row; */
+
+ }
+ @media only screen and (min-width : 320px) {
+    /* .app-container{
+        flex-direction: column;
+     } */
+ }
+
+ /* Extra Small Devices, Phones */ 
+ @media only screen and (min-width : 480px) {
+    /* .app-container{
+        padding: 10px;
+        flex-direction: column;
+     } */
+ }
+
+ /* Small Devices, Tablets */
+ @media only screen and (min-width : 768px) {
+    /* .app-container{
+        padding: 10px;
+        flex-direction: row;
+     } */
+ }
+
+ /* Medium Devices, Desktops */
+ @media only screen and (min-width : 992px) {
+
+ }
+
+ /* Large Devices, Wide Screens */
+ @media only screen and (min-width : 1200px) {
+
+ }
+  
+/* CARD DIV END */
