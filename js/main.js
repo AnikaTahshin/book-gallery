@@ -1,10 +1,12 @@
 let cardDiv = document.getElementById("app-container");
 let input = document.getElementById("search-input");
+let wishDiv = document.getElementById("wish-container");
+let dropdownDiv = document.getElementById('dropdown-content')
+let category = []
 let dataStore = [];
+let wishStore = JSON.parse(localStorage.getItem("wishlist")) || [];
 
 document.addEventListener("DOMContentLoaded", function () {
-
-
   const options = {
     method: "GET",
   };
@@ -17,58 +19,90 @@ document.addEventListener("DOMContentLoaded", function () {
       return response.json();
     })
     .then((data) => {
-      console.log(data); // Log the whole response to see its structure
       dataStore = data?.results;
-      displayBooks(dataStore); // Display all books initially
+      dataStore?.map((item) => {
+        // category.push(item?.bookshelves[0])
+        if (item?.bookshelves) {
+        dropdownCategory(item?.bookshelves[0])
+          
+        }
+        
+        // console.log("cat",item?.bookshelves[0])
+      })
+      displayBooks(dataStore); 
     })
     .catch((error) => console.error("Fetch error:", error));
 
-  // Event listener for search input
   input.addEventListener("keyup", function (e) {
-    const currentWord = e.target.value.toLowerCase(); // Convert to lowercase for case-insensitive comparison
+    const currentWord = e.target.value.toLowerCase(); 
     const filteredData = dataStore.filter((o) =>
       o.title.toLowerCase().includes(currentWord)
     );
 
-    // Clear previous results
     cardDiv.innerHTML = "";
 
-    // If the input is empty, show all books; otherwise, show filtered results
     if (currentWord) {
-      filteredData.length ? displayBooks(filteredData) : cardDiv.innerHTML = noResultHTML();
+      filteredData.length
+        ? displayBooks(filteredData)
+        : (cardDiv.innerHTML = noResultHTML());
     } else {
-      displayBooks(dataStore); // Show all books if input is empty
+      displayBooks(dataStore); 
     }
   });
 });
 
+
+function dropdownCategory(category) {
+  const res = `
+              <a id="drop-item" href="#">${category}</a>
+
+  `
+  dropdownDiv.insertAdjacentHTML("beforeend", res);
+}
 function displayBooks(books) {
-  // Clear the container before appending new books
   cardDiv.innerHTML = "";
-  
-  books?.forEach((book) => {
+
+  books?.forEach((book, index) => {
     const authorName =
       book.authors.length > 0 ? book.authors[0].name : "Unknown Author";
+      const isLiked = wishStore.some((wishBook) => wishBook.id === book.id);
+      const heartIconClass = isLiked ? "fa-solid" : "fa-regular";
+  
+      const res = `
+          <div class="card">
+              <i onclick="toggleLike(${index})" class="${heartIconClass} fa-heart" id="heart-icon-${index}"></i>
+  
+            <img class="card-img" src=${book.formats["image/jpeg"]} alt="">
+            <p>${book.id}</p>
+            <p>${book.title}</p>
+            <p class="author">Author: ${authorName}</p>
+          </div>
+        `;
 
-    const res = `
-        <div class="card">
-          <img class="card-img" src=${book.formats['image/jpeg']} alt="">
-          <p>${book.id}</p>
-          <p>${book.title}</p>
-          <p class="author">Author: ${authorName}</p>
-        </div>
-      `;
-
-    // Use insertAdjacentHTML to append the HTML as a string
     cardDiv.insertAdjacentHTML("beforeend", res);
   });
 }
 
-function noResultHTML() {
-  return `<div class="pieceofdata">
-    <h1 class="symbol"></h1>
-    <h1 class="name"></h1>
-    <h1 class="name">No Results Found</h1>
-    <h1 class="price"></h1>
-  </div>`;
+
+function toggleLike(index) {
+  const heartIcon = document.getElementById(`heart-icon-${index}`);
+  const tempArr = dataStore[index];
+
+  if (heartIcon.classList.contains("fa-regular")) {
+    heartIcon.classList.remove("fa-regular");
+    heartIcon.classList.add("fa-solid");
+
+    wishStore.push(tempArr);
+    dataStore.push(tempArr);
+
+  } else {
+    heartIcon.classList.remove("fa-solid");
+    heartIcon.classList.add("fa-regular");
+
+    wishStore = wishStore.filter((book) => book.id !== tempArr.id);
+  }
+
+  localStorage.setItem("wishlist", JSON.stringify(wishStore));
 }
+
+

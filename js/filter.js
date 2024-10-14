@@ -1,69 +1,76 @@
+const wishStoreGet = JSON.parse(localStorage.getItem("wishlist")) || [];
+const detailsDiv = document.getElementById("details-container");
+
+
+console.log("getting list",wishStoreGet)
 document.addEventListener("DOMContentLoaded", function () {
-    const cardDiv = document.getElementById("app-container");
-    const input = document.getElementById("search-input");
-    // let dataaa = document.querySelector(".app-container");
-  
-    // Change const to let so dataStore can be reassigned
-    let dataStore = [];
-  
-    const options = {
-      method: "GET",
-    };
-  
-    fetch("https://gutendex.com/books/", options)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+    const wishDiv = document.getElementById("wish-container");
+
+    console.log("check wishlist", wishStoreGet);
+
+    if (wishStoreGet.length === 0) {
+        wishDiv.innerHTML = "<p>Your wishlist is empty.</p>";
+    } else {
+        wishStoreGet.forEach((book,index) => {
+            const authorName = book.authors.length > 0 ? book.authors[0].name : "Unknown Author";
+            
+            const res = 
+                `<div class="card">
+
+              <a href="../html/bookDetails.html" onclick="bookDetails()">
+                    <img class="card-img" src="${book.formats["image/jpeg"]}" alt="Book Image">
+                    <p>${book.id}</p>
+                    <p>${book.title}</p>
+                    <p class="author">Author: ${authorName}</p>
+              </a>
+                </div>`
+
+            ;
+
+            wishDiv.insertAdjacentHTML("beforeend", res);
+        });
+    }
+});
+
+function bookDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const bookId = params.get("id");
+
+    if (bookId) {
+        const selectedBook = wishStoreGet.find((book) => book.id === bookId);
+
+        if (selectedBook) {
+            const authorName = selectedBook.authors.length > 0 ? selectedBook.authors[0].name : "Unknown Author";
+            const detailsHTML = `
+                <div class="card">
+                    <img class="card-img" src="${selectedBook.formats["image/jpeg"]}" alt="Book Image">
+                    <p>${selectedBook.id}</p>
+                    <p>${selectedBook.title}</p>
+                    <p class="author">Author: ${authorName}</p>
+                </div>
+            `;
+
+            detailsDiv.innerHTML = detailsHTML;
+        } else {
+            detailsDiv.innerHTML = "<p>Book not found.</p>";
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data); // Log the whole response to see its structure
-        dataStore = data?.results;
-      })
-      .catch((error) => console.error("Fetch error:", error));
-  
-    // Helper function to generate HTML for filtered results
-    function getHTML(data) {
-      return data.map((filterData) => generateHTML(filterData)).join("");
+    } else {
+        detailsDiv.innerHTML = "<p>No book ID provided.</p>";
     }
-  
-    function generateHTML(filterData) {
-      return `
-       <div class="card">
-<img class="card-img" src=${filterData.formats["image/jpeg"]} alt="">
+    // const detailsDiv=document.getElementById('details-container')
+    // wishStoreGet.find((item) => item.id == id){
 
-                          <p> ${filterData?.id}</p>
-
-              <p>${filterData?.title}</p>
-              <p class="author">Author: ${filterData?.authors[0]?.name}</p>
-            </div>
-      `;
-    }
-  
-    function noResultHTML() {
-      return `<div class="pieceofdata">
-      
-      <h1 class="symbol"></h1>
-      <h1 class="name"></h1>
-      <h1 class="name">No Results Found</h1><h1 class="price"></h1></div>`;
-    }
-  
-    // Event listener for search input
-    input.addEventListener("keyup", function (e) {
-      const currentWord = e.target.value.toLowerCase(); // Convert to lowercase for case-insensitive comparison
-      const filteredData = dataStore.filter((o) =>
-        o.title.toLowerCase().includes(currentWord)
-      );
-  
-      // Only display filtered results if there is input
-      if (currentWord) {
-        cardDiv.innerHTML = filteredData.length
-          ? getHTML(filteredData)
-          : noResultHTML();
-      } else {
-        cardDiv.innerHTML = ""; // Clear results if input is empty
-      }
-    });
-  });
-  
+    //     const data = 
+    //     `<div class="card">
+    
+    //               <a href="../html/bookDetails.html" onclick="bookDetails(${book})">
+    //                     <img class="card-img" src="${book.formats["image/jpeg"]}" alt="Book Image">
+    //                     <p>${book.id}</p>
+    //                     <p>${book.title}</p>
+    //                     <p class="author">Author: ${authorName}</p>
+    //               </a>
+    //                 </div>`
+                    
+    // }
+    // detailsDiv.innerHTML(data)
+}

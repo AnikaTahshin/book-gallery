@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Book Wishlist</title>
 </head>
@@ -13,7 +15,15 @@
     <div class="topnav">
         <a class="active" href="#home">Home</a>
         <a href="./html/wishlist.html">Wishlist</a>
-        <!-- <a href="#contact">Contact</a> -->
+        <div class="dropdown">
+          <button class="dropbtn">Dropdown 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div id="dropdown-content" class="dropdown-content">
+            <!-- <a href="#">Link 2</a>
+            <a href="#">Link 3</a> -->
+          </div>
+        </div> 
         <div class="search-container">
           <form action="javascript:void(0);">
             <input id="search-input" type="text" placeholder="Search.." name="search">
@@ -23,7 +33,7 @@
       </div>
       <!-- <div class="dataaa"></div> -->
     <div class="app-container" id="app-container">
-        
+     
     </div>
 
     <script src="./js/main.js"></script>
