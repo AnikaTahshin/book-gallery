@@ -6,10 +6,28 @@ let category = []
 let dataStore = [];
 let wishStore = JSON.parse(localStorage.getItem("wishlist")) || [];
 
+// loading on api response
+const loader = document.querySelector("#loading");
+
+
+// showing loading
+function displayLoading() {
+  loader.classList.add("display");
+  // to stop loading after some time
+  
+}
+
+// hiding loading 
+function hideLoading() {
+  loader.classList.remove("display");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const options = {
     method: "GET",
   };
+
+  displayLoading()
 
   fetch("https://gutendex.com/books/", options)
     .then((response) => {
@@ -19,7 +37,9 @@ document.addEventListener("DOMContentLoaded", function () {
       return response.json();
     })
     .then((data) => {
-      dataStore = data?.results;
+      
+        hideLoading()
+        dataStore = data?.results;
       dataStore?.map((item) => {
         // category.push(item?.bookshelves[0])
         if (item?.bookshelves) {
@@ -29,7 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
         
         // console.log("cat",item?.bookshelves[0])
       })
-      displayBooks(dataStore); 
+      displayBooks(dataStore);
+      
+       
     })
     .catch((error) => console.error("Fetch error:", error));
 

@@ -1,6 +1,20 @@
 // const detailsDiv = document.getElementById("details-container");
 // const id = JSON.parse(localStorage.getItem("selectedBookId"));
+// loading on api response
+const loader = document.querySelector("#loading");
 
+
+// showing loading
+function displayLoading() {
+  loader.classList.add("display");
+  // to stop loading after some time
+  
+}
+
+// hiding loading 
+function hideLoading() {
+  loader.classList.remove("display");
+}
 document.addEventListener("DOMContentLoaded", function () {
     const bookId = localStorage.getItem("selectedBookId");
     console.log('hello id',bookId)
@@ -13,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchBookDetails(id) {
+    displayLoading()
     fetch(`https://gutendex.com/books/?ids=${id}`)
         .then((response) => {
             if (!response.ok) {
@@ -21,6 +36,7 @@ function fetchBookDetails(id) {
             return response.json();
         })
         .then((data) => {
+            hideLoading()
             console.log("Book details:", data);
             // Display the book details on the page
             displayBookDetails(data);
