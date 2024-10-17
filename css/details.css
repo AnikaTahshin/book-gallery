@@ -1,0 +1,33 @@
+.book-container{
+/* display: flex;
+justify-content: center;
+align-items: center; */
+margin: auto;
+
+}
+
+.author-name{
+    color: #0397D3;
+}
+
+.text-black{
+    color: black;
+}
+.detailsDiv{
+    margin-left: 35px;
+}
+#details-container{
+
+display: flex;
+justify-content:center;
+/* align-items: center; */
+flex-direction: row;
+max-width: 100%;
+margin-top: 100px;
+}
+
+
+.img-div-details{
+    border: 1px solid black;
+    padding: 15px;
+}

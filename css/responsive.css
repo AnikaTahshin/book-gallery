@@ -1,0 +1,90 @@
+@media only screen and (min-width: 320px) {
+  .app-container {
+    flex-direction: column;
+    margin-top: 5px;
+  }
+  .container {
+    max-width: 100%;
+  }
+
+  .pagination_section a {
+    /* color: black; */
+    padding: 6px;
+    /* text-decoration: none; */
+  }
+  .search-container {
+    padding: 10px;
+  }
+
+  .heart-icon {
+    float: right;
+  }
+  .nav-content {
+    flex-direction: column;
+  }
+  #details-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .details-shimmer {
+    display: flex;
+    flex-direction: column;
+  align-items: center;
+  }
+  .shine-details{
+    width: 180px;
+  }
+  .shimmer-line-div{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 480px) {
+  .app-container {
+    padding: 10px;
+    flex-direction: column;
+  }
+
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .nav-content {
+    flex-direction: row;
+  }
+
+  #details-container {
+    flex-direction: row;
+    /* align-items: center; */
+  }
+  .details-shimmer {
+    /* display: flex; */
+    flex-direction: row;
+  align-items: start;
+  }
+
+  .shimmer-line-div{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+  .app-container {
+    flex-direction: row;
+  }
+  .card-img {
+    max-width: 150px;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+}
