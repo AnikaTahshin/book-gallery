@@ -103,6 +103,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+
+function noResultHTML() {
+  pagination.innerHTML = "";
+
+  return `
+      <div>
+          <h3>No Data Found</h3>
+          <p>Try adjusting your search criteria.</p>
+      </div>
+  `;
+}
 // pagination buttton starts
 
 function setupPaginationButton(items, row_per_page, current_page) {
@@ -149,6 +160,7 @@ function setupPaginationButton(items, row_per_page, current_page) {
 function searchData(data) {
   // Store the filtered data
   // localStorage.setItem("dataItem", JSON.stringify(data));
+  pagination.innerHTML = "";
 
   cardDiv.innerHTML = "";
 
