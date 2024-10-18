@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
 // BOOK DETAILS PAGE
 function goToBookDetails(bookId) {
 
-    console.log("going...")
     localStorage.setItem("selectedBookId",bookId);
      window.location.href = `../html/bookDetails.html`;
   }

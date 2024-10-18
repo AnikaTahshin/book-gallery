@@ -9,14 +9,14 @@ let wishStore = JSON.parse(localStorage.getItem("wishlist")) || [];
 const pagination = document.getElementsByClassName("pagination_section")[0];
 let searchDataStore = [];
 
-let row = 5;
+let row = 4;
 let page = sessionStorage.getItem("page_num");
 
 let current_page = page ? parseInt(page) : 1;
 
 // showing shimmer effect on api response
 function displayLoading() {
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 4; i++) {
     let shimmerContent = `<div id="${i}">
                             <div style="padding: 10px;">
                                 <box class="shine"></box>
@@ -89,7 +89,8 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       cardDiv.innerHTML = "";
-      localStorage.setItem("dataItem", filteredData);
+      localStorage.setItem("dataItem", JSON.stringify(filteredData));
+
 
       
       filteredData.length > 0
@@ -103,8 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // pagination buttton starts
-
-
 
 function setupPaginationButton(items, row_per_page, current_page) {
   pagination.innerHTML = "";
@@ -146,11 +145,10 @@ function setupPaginationButton(items, row_per_page, current_page) {
 
 
 
-
 // SEARCH BOOK STARTS
 function searchData(data) {
   // Store the filtered data
-  localStorage.setItem("dataItem", JSON.stringify(data));
+  // localStorage.setItem("dataItem", JSON.stringify(data));
 
   cardDiv.innerHTML = "";
 
@@ -165,9 +163,16 @@ function searchData(data) {
             <i onclick="toggleLike(${index})" class="${heartIconClass} fa-heart heart-icon" id="heart-icon-${index}"></i>
 
           <img class="card-img" src=${book.formats["image/jpeg"]} alt="">
-          <p>${book.id}</p>
-          <p>${book.title}</p>
-          <p class="author">Author: ${authorName}</p>
+          <div class="home-desc">
+
+            <p>${book.id}</p>
+            <p>${book.title}</p>
+            <p class="author">Author: ${authorName}</p>
+            <p class="author">Genre: ${book.subjects[3]}</p>
+</div>
+            <div class="btn-div">
+          <button onclick="goToBookDetails(${book.id})" class="details-btn">View Details</button>
+        </div>
         </div>
 
       `;
@@ -175,6 +180,8 @@ function searchData(data) {
     cardDiv.insertAdjacentHTML("beforeend", res);
   });
 }
+
+// 
 // SEARCH BOOK ENDS
 
 // SHOW CATEGORY ON DROPDOWN
@@ -209,7 +216,8 @@ function dropdownCategory(category) {
 
 function displayBooksDrop(filteredData) {
   cardDiv.innerHTML = "";
-
+  pagination.style.display="none"
+  
   filteredData?.forEach((book, index) => {
     const authorName =
       book.authors.length > 0 ? book.authors[0].name : "Unknown Author";
@@ -240,6 +248,7 @@ function displayBooksDrop(filteredData) {
     card.className = "card-container";
     card.insertAdjacentHTML("beforeend", res);
     cardDiv.appendChild(card);
+    
     return;
   });
 }
@@ -268,7 +277,7 @@ function displayBooks(books, row_per_page, page) {
           <img class="card-img" src=${book.formats["image/jpeg"]} alt="">
            <div class="home-desc">
             <p>${book.id}</p>
-            <p>${book.title}</p>
+            <p class = "title-text">${book.title}</p>
             <p class="author">Author: ${authorName}</p>
             <p class="author">Genre: ${book.subjects[3]}</p>
            </div>
